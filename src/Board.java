@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import Roles.*;
-
 public class Board {
     private final int BOARD_SIZE = 8, FIRST_CAPITAL_LETTER = 65;
     private final boolean WHITE = true, BLACK = false;
