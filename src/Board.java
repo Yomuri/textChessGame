@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Board {
     private final int BOARD_SIZE = 8, FIRST_CAPITAL_LETTER = 65;
-    private final boolean WHITE = true, BLACK = false;
+    private final boolean WHITE = true;
     private Piece[][] board;
     private boolean currentSide, isRunning;
     private Scanner scan;
