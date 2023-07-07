@@ -32,21 +32,20 @@ public class Board {
         System.out.println("  A B C D E F G H");
     }
     private void playTurn(){
-        Point start = getCoordinate("start");
-        Piece piece = board[start.getRow()][start.getCol()];
-        if (piece == null || piece.getSide() != currentSide){
-            System.out.println("That's not your piece, lets try again.");
-            display();
-            playTurn();
-            return;
-        }
-        Point end = getCoordinate("end");
-        if (Piece.isWithinBoard(end) && piece.isValidMove(board, end)){
+        try {
+            Point start = getCoordinate("start");
+            Piece piece = board[start.getRow()][start.getCol()];
+            if (piece == null)
+                throw new IllegalArgumentException("That isn't a piece");
+            if (piece.getSide() != currentSide)
+                throw new IllegalArgumentException("Incorrect players piece chosen");
+            Point end = getCoordinate("end");
+            if (!piece.isValidMove(board, end))
+                throw new IllegalArgumentException("Invalid move");
             board[end.getRow()][end.getCol()] = piece;
             board[start.getRow()][start.getCol()] = null;
-        }
-        else {
-            System.out.println("Invalid move, please try again.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage() + ", please try again.");
             display();
             playTurn();
         }
@@ -59,7 +58,7 @@ public class Board {
             Integer.valueOf(coordinate.charAt(0)) - FIRST_CAPITAL_LETTER
         );
         if (coordinate.length() < 2 || !Piece.isWithinBoard(point))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid point");
         return point;
     }
     private boolean hasWon(){
